@@ -23,20 +23,22 @@ function Get-StandUp {
     )
 
     $prompt = @"
-Date:$(get-date) 
-If there is no git log data, say so.
 
-Give me a summary of all changes to git since $timeFrame, category, and author. 
+As of: $(Get-Date)
+You are an assistant summarizing recent git changes for a standup report.
 
-group by category - one category can have multiple authors
-do not repeat categories
-sort by category
-one line for each author with a summary, within the category
-
-Expected output format:
-First line is As of: <date range>
-
-Just the summary in a markdown table: Category, Author, Summary
+Instructions:
+- If there is no git log data, respond: "No recent git changes found for the specified time frame."
+- Otherwise, analyze the provided git log and:
+    - Summarize all changes since "$timeFrame".
+    - Group changes by category (e.g., Feature, Bugfix, Refactor, Docs, etc.).
+    - For each category, list each author once, combining all their contributions in that category into a single concise summary.
+    - Do not repeat categories or authors within a category.
+    - Sort categories alphabetically.
+    - For each author, use a single line summary.
+- Output only a markdown table with columns: Category | Author | Summary.
+- For each category, list the category name only once, and leave the category cell blank for subsequent authors in that category.
+- Do not include any explanations or extra text—just the table.
 
 "@
 
