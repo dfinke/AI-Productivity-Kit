@@ -6,7 +6,7 @@
 
 ## Features
 
-- **`Get-RecentWork`** – *Summarize recent file system activity using AI.* Scans the current directory for recent changes (within a specified timeframe) and uses an AI model to produce a concise summary table of the activity.
+- **`Get-RecentWork`** – *Summarize recent file system activity using AI.* Scans a specified directory (defaults to the current directory) for recent changes (within the last week) and uses an AI model to produce a concise summary table of the activity. Accepts a `-Path` parameter to specify the directory.
 - **`Get-StandUp`** – *Generate AI-assisted stand-up reports from Git history.* Fetches recent Git commit logs and summarizes them into a markdown report categorized by type of contribution.
 
 ## Installation
@@ -23,7 +23,12 @@ Or clone from GitHub and import the `.psd1` file manually.
 ## Usage
 
 ```powershell
-Get-RecentWork -timeFrame "last 3 days"
+# Summarize recent activity in the current directory (last 7 days)
+Get-RecentWork
+
+# Summarize recent activity in a specific directory
+Get-RecentWork -Path "C:\Projects"
+
 Get-StandUp -timeFrame "yesterday"
 ```
 
