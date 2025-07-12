@@ -24,14 +24,16 @@ function Get-RecentWork {
     [CmdletBinding()]
     param(
         [string]$Path = ".",
+        [int]$DaysAgo = 7,
         [string]$Model = "github:openai/gpt-4.1"
     )
 
+    $sinceDate = (Get-Date).AddDays(-$DaysAgo)
     $prompt = @"
 Date: $(Get-Date)
 If there is no recent directory activity, say so.
 
-Give me a summary of all directory changes (by LastWriteTime) from the last week.
+Give me a summary of all directory changes (by LastWriteTime) from the last $DaysAgo days.
 
 Sort by date, recent first.
 Show a table with directory name and last write time.
@@ -39,8 +41,14 @@ First line is As of: <date range>
 No explanation, just the summary table.
 "@
 
-    Write-Host "Fetching recent directory activity from the last week in path: $Path..." -ForegroundColor Cyan
-    $data = Get-ChildItem -Path $Path -Directory | Where-Object { $_.LastWriteTime -gt (Get-Date).AddDays(-7) } | Sort-Object LastWriteTime -Descending | Select-Object Name, LastWriteTime
+
+    Write-Host "Fetching recent directory activity from the last $DaysAgo days in path: $Path..." -ForegroundColor Cyan
+    if (-not (Test-Path -Path $Path -PathType Container)) {
+        Write-Host "The specified path '$Path' does not exist or is not a directory." -ForegroundColor Red
+        return
+    }
+
+    $data = Get-ChildItem -Path $Path -Directory | Where-Object { $_.LastWriteTime -gt $sinceDate } | Sort-Object LastWriteTime -Descending | Select-Object Name, LastWriteTime
 
     if (-not $data) {
         Write-Host "No recent directory activity found for the specified time frame." -ForegroundColor Red
