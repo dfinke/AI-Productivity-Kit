@@ -6,8 +6,16 @@
 
 ## Features
 
-- **`Get-RecentWork`** – *Summarize recent file system activity using AI.* Scans a specified directory (defaults to the current directory) for recent changes (within the last week) and uses an AI model to produce a concise summary table of the activity. Accepts a `-Path` parameter to specify the directory.
-- **`Get-StandUp`** – *Generate AI-assisted stand-up reports from Git history.* Fetches recent Git commit logs and summarizes them into a markdown report categorized by type of contribution.
+- **`Get-RecentWork`** – *Summarize recent file system activity using AI.*
+  - Scans a specified directory (defaults to the current directory) for recent changes within a configurable time window (default: last 7 days).
+  - Accepts `-Path` and `-DaysAgo` parameters for flexibility.
+  - Checks if the directory exists and provides a clear error if not.
+  - Uses an AI model to produce a concise summary table of the activity.
+
+- **`Get-StandUp`** – *Generate AI-assisted stand-up reports from Git history.*
+  - Fetches recent Git commit logs since a specified time frame (e.g., "yesterday", "last 2 days").
+  - Checks if git is installed and informs the user if not.
+  - Summarizes commit history into a markdown report categorized by type of contribution, with robust prompt logic for clear, non-redundant summaries.
 
 ## Installation
 
@@ -22,17 +30,24 @@ Or clone from GitHub and import the `.psd1` file manually.
 
 ## Usage
 
+
 ```powershell
 # Summarize recent activity in the current directory (last 7 days)
 Get-RecentWork
 
-# Summarize recent activity in a specific directory
-Get-RecentWork -Path "C:\Projects"
+# Summarize recent activity in a specific directory and time window
+Get-RecentWork -Path "C:\Projects" -DaysAgo 3
 
+# Generate a stand-up report from recent git history
 Get-StandUp -timeFrame "yesterday"
 ```
 
-These commands summarize directory and Git commit activity using AI, outputting structured markdown suitable for quick reviews or stand-up reports.
+**Note:**
+- `Get-RecentWork` will inform you if the specified directory does not exist.
+- `Get-StandUp` will check for git and prompt you to install it if missing.
+
+
+These commands summarize directory and Git commit activity using AI, outputting structured markdown suitable for quick reviews or stand-up reports. Both commands now include improved error handling and more flexible parameters.
 
 ## Contributing
 
