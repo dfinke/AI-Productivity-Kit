@@ -1,3 +1,5 @@
+#Requires -Module PSAISuite
+
 <#
 .SYNOPSIS
 Summarizes recent Git changes using AI for standup reports.
@@ -18,8 +20,8 @@ function Get-StandUp {
     [CmdletBinding()]
     param(
         $timeFrame = "yesterday",
-        [string]$Model = "openai:gpt-4.1"
-        #$timeFrame = "last 24 hours"
+        [string]$Model = "openai:gpt-4.1",
+        [switch]$Raw
     )
 
     $prompt = @"
@@ -84,6 +86,11 @@ Instructions:
 
         Write-Verbose "AI prompt sent: $prompt"
         Write-Verbose "AI response received: $response"
+        
+        if ($Raw) {
+            return $response
+        }   
+
         if (Get-Command glow -ErrorAction SilentlyContinue) {
             $response | glow
             return
