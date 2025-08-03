@@ -2,20 +2,19 @@
 
 ## Project Overview
 
-**AI-Productivity-Kit** is a PowerShell module that provides a set of AI-powered utilities to boost your daily productivity and streamline workflows. It leverages generative AI (via OpenAI GPT models through the PSAISuite module) to automate and assist with common tasks that professionals face each day. By integrating AI into the PowerShell environment, this kit can **summarize recent work, generate status reports, and analyze activity logs** – all within your familiar command-line workflow. In short, AI-Productivity-Kit is designed to *supercharge your daily tasks and workflows* by offloading tedious summarization and reporting tasks to an intelligent assistant running right from PowerShell.
+**AI-Productivity-Kit** is a PowerShell module that provides a set of AI-powered utilities to boost your daily productivity and streamline workflows. It leverages generative AI (via OpenAI GPT models through the PSAISuite module) to automate and assist with common tasks that professionals face each day. 
 
 ## Features
-
-- **`Get-RecentWork`** – *Summarize recent file system activity using AI.*
-  - Scans a specified directory (defaults to the current directory) for recent changes within a configurable time window (default: last 7 days).
-  - Accepts `-Path` and `-DaysAgo` parameters for flexibility.
-  - Checks if the directory exists and provides a clear error if not.
-  - Uses an AI model to produce a concise summary table of the activity.
 
 - **`Get-StandUp`** – *Generate AI-assisted stand-up reports from Git history.*
   - Fetches recent Git commit logs since a specified time frame (e.g., "yesterday", "last 2 days").
   - Checks if git is installed and informs the user if not.
   - Summarizes commit history into a markdown report categorized by type of contribution, with robust prompt logic for clear, non-redundant summaries.
+- **`Get-RecentWork`** – *Summarize recent file system activity using AI.*
+  - Scans a specified directory (defaults to the current directory) for recent changes within a configurable time window (default: last 7 days).
+  - Accepts `-Path` and `-DaysAgo` parameters for flexibility.
+  - Checks if the directory exists and provides a clear error if not.
+  - Uses an AI model to produce a concise summary table of the activity.
 
 ## Installation
 
@@ -29,7 +28,6 @@ Import-Module AIProductivityKit
 Or clone from GitHub and import the `.psd1` file manually.
 
 ## Usage
-
 
 ```powershell
 # Summarize recent activity in the current directory (last 7 days)
@@ -55,10 +53,22 @@ These commands summarize directory and Git commit activity using AI, outputting 
 - Submit PRs following project conventions.
 - Use inline help metadata and add comments for clarity.
 
-## License
+## GitHub Provider Integration
 
-MIT License. See the [LICENSE](./LICENSE) file for details.
+Unlock even more AI-powered productivity by connecting the PSAISuite module to your GitHub account. This enables access to advanced models and features using your own credentials.
 
----
+### Getting Started
 
-*AI-Productivity-Kit brings the power of AI into your PowerShell toolbox, helping you automate the routine and focus on what matters.* 🚀
+To use the GitHub provider, you’ll need a personal access token with the right permissions. Creating one is easy—just follow the official [GitHub Personal Access Token guide](https://docs.github.com/en/enterprise-server@3.16/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic).
+
+Once you have your token, set it as an environment variable in your PowerShell session:
+
+```powershell
+$env:GITHUB_TOKEN = "your-github-token"
+```
+
+This ensures seamless authentication and unlocks the full potential of PSAISuite’s GitHub integration.
+$env:GITHUB_TOKEN = "your-github-token"
+```
+
+This ensures seamless authentication and unlocks the full potential of PSAISuite’s GitHub integration.
